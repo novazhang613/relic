@@ -408,82 +408,32 @@ void fb_mul_lodah(fb_t c, const fb_t a, const fb_t b) {
 	TRY {
 		dv_new(t);
 
-#ifdef YIQUN
+#if defined(REC_FSM) || defined(REC_SINGLE) 
 		// Optionally fix the addresses of the inputs.
 		volatile int* a_copy = (int*) (ADDR_A + ADDR_OFFSET);
 		volatile int* b_copy = (int*) (ADDR_B + ADDR_OFFSET);
 		volatile int* c_copy = (int*) (ADDR_C + ADDR_OFFSET);
 
- 		int* addr_t    = (int*) (ADDR_T   + ADDR_OFFSET);
- 		int* addr_ir   = (int*) (ADDR_IR  + ADDR_OFFSET);
- 		int* addr_ir_t = (int*) (ADDR_IR_T+ ADDR_OFFSET);
-/*
- 		int* addr_t = (int*)0x00002800; //drt = 0d640
- 		int* addr_ir = (int*)0x00003800; //drir = 0d896
- 		int* addr_ir_t = (int*)0x00003900; //drirt = 0d912
-*/
+ 		//int* addr_t    = (int*) (ADDR_T   + ADDR_OFFSET);
+ 		//int* addr_ir   = (int*) (ADDR_IR  + ADDR_OFFSET);
+ 		//int* addr_ir_t = (int*) (ADDR_IR_T+ ADDR_OFFSET);
+
+		// Called in fb_param_set_any();
+		//LIM_addr_ir_set();
 
 		// refer to testing_wo_relic/ecc_mul_woFSM/ecc_mul_bkp 
-		#if FB_POLYN == 163
-		addr_ir[0] = 0xC9; 
-		addr_ir[1] = 0x0;
-		addr_ir[2] = 0x0; 
-		addr_ir[3] = 0x0;
-		addr_ir[4] = 0x0; 
-		addr_ir[5] = 0x8;
-		addr_ir[6] = 0x0; 
-		addr_ir[7] = 0x0;
-		#endif
-
-		#if FB_POLYN == 233
-		addr_ir[0] = 0x1; 
-		addr_ir[1] = 0x0;
-		addr_ir[2] = 0x400; 
-		addr_ir[3] = 0x0;
-		addr_ir[4] = 0x0; 
-		addr_ir[5] = 0x0;
-		addr_ir[6] = 0x0; 
-		addr_ir[7] = 0x200;
-		#endif
-
-		#if FB_POLYN == 283
-		addr_ir[0] = 0x10A1;
-		addr_ir[1] = 0x0;
-		addr_ir[2] = 0x0;
-		addr_ir[3] = 0x0;
-		addr_ir[4] = 0x0;
-		addr_ir[5] = 0x0;
-		addr_ir[6] = 0x0;
-		addr_ir[7] = 0x0;
-		addr_ir[8] = 0x8000000;
-		#endif
-
-		#if FB_POLYN == 409
-		addr_ir[0] = 0x1;
-		addr_ir[1] = 0x0;
-		addr_ir[2] = 0x800000;
-		addr_ir[3] = 0x0;
-		addr_ir[4] = 0x0;
-		addr_ir[5] = 0x0;
-		addr_ir[6] = 0x0;
-		addr_ir[7] = 0x0;
-		addr_ir[8] = 0x0;
-		addr_ir[9] = 0x0;
-		addr_ir[10] = 0x0;
-		addr_ir[11] = 0x0;
-		addr_ir[12] = 0x2000000;
-		#endif
-
-
 		// Copy input variables.
 		//memcpy((int*)a_copy, a, FB_DIGS);
 		//memcpy((int*)b_copy, b, FB_DIGS);
-///*FAKE no memory
+
 		for(int i=0;i<FB_DIGS;i++) {
 			a_copy[i] = a[i];
 			b_copy[i] = b[i];
 		}
-//*/
+	#ifdef REC_FSM
+		LIM_mulrdc();
+	#endif
+	#ifdef REC_SINGLE
 		uint8_t Idrb, Idrt, Idrir, Idrc, Idrirt;
 
  		Idrb =   (((unsigned int)ADDR_B)    >> 8 ) & 0x7F;
@@ -492,21 +442,12 @@ void fb_mul_lodah(fb_t c, const fb_t a, const fb_t b) {
  		Idrir =  (((unsigned int)ADDR_IR)   >> 8 ) & 0x7F;
  		Idrirt = (((unsigned int)ADDR_IR_T) >> 8 ) & 0x7F;
 
-
-		LIM_mulrdc(a_copy, b_copy, c_copy, Idrb, Idrc, Idrt, Idrir, Idrirt);
-
-		// Remember to define all these Id* variables here...or somewhere else...
-		// DEBUG
-		//volatile int* addr_debug = (int*) 0x4a00;
-		
-		// Copy results from c_copy back into c.
-		//memcpy(c, (int*)c_copy, FB_DIGS);
-///*FAKE no memory
+		LIM_mulrdc_single(a_copy, b_copy, c_copy, Idrb, Idrc, Idrt, Idrir, Idrirt);
+	#endif
 		for(int i=0;i<FB_DIGS;i++) {
 			c[i] = c_copy[i];
-			//addr_debug[i] = c[i];
 		}
-//*/
+
 #else
 		fb_muln_low(t, a, b);
 

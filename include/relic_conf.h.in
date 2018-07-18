@@ -37,8 +37,12 @@
 
 /** Debugging support. */
 #cmakedefine DEBUG
-/** YIQUN support. */
-#cmakedefine YIQUN
+/** REC_FSM support. */
+#cmakedefine REC_FSM
+/** REC_SINGLE support. */
+#cmakedefine REC_SINGLE
+/** YQ_PRT support. */
+#cmakedefine YQ_PRT
 /** Profiling support. */
 #cmakedefine PROFL
 /** Error handling support. */

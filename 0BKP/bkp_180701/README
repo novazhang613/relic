@@ -1,0 +1,7 @@
+2018-07-01
+
+1. All bits of fb_mul work
+
+- src/fb/recryptor.c
+- src/fb/relic_fb_mul.c
+- include/recryptor.h

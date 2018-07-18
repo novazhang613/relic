@@ -14,6 +14,8 @@
 #define ADDR_IR 0x00006800  //drir = 0d896 
 #define ADDR_IR_T 0x00006900  //drirt = 0d912
 
+#define ADDR_REC_FIN 0x0010000
+
 /*
 #define ADDR_A 0x00002500  //dra = 0d592
 #define ADDR_B 0x00002600  //drb = 0d608
@@ -30,6 +32,7 @@
 #define IDRIR  ((((unsigned int)ADDR_IR) >> 8 ) & 0xFF)
 #define IDRIRT ((((unsigned int)ADDR_IR_T) >> 8 ) & 0xFF)
 
+
 #define DECODER 0xA0000140
 #define NUM_FOR   ((int)(FB_DIGS * FB_DIGIT/4 * 10-1))  // - ((int)((256*2-FB_POLYN)/4))*10))
 #define NUM_PLN_Minus1  ((int)(FB_POLYN/512))
@@ -41,7 +44,10 @@
 #define SHIFT_BIT ((int)(FB_POLYN % 32))
 
 //void LIM_mulrdc(volatile int *addr_a, volatile int *addr_c);
+void LIM_mulrdc();
 
-void LIM_mulrdc(volatile int *addr_a, volatile int *addr_b, volatile int *addr_c, uint8_t Idrb, uint8_t Idrc, uint8_t Idrt, uint8_t Idrir, uint8_t Idrirt); 
+void LIM_mulrdc_single(volatile int *addr_a, volatile int *addr_b, volatile int *addr_c, uint8_t Idrb, uint8_t Idrc, uint8_t Idrt, uint8_t Idrir, uint8_t Idrirt); 
+
+void LIM_addr_ir_set();
 
 #endif

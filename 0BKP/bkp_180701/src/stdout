@@ -1,0 +1,98 @@
+./fb/relic_fb_rdc.c:					fb_addd_low(tmpa + j, tmpa + j, fb_poly_get(), FB_DIGS);
+./fb/relic_fb_rdc.c:					r[FB_DIGS] = fb_lshb_low(r, fb_poly_get(), k);
+./fb/relic_fb_rdc.c:					fb_addd_low(a + j, a + j, fb_poly_get(), FB_DIGS);
+./fb/relic_fb_rdc.c:					r[FB_DIGS] = fb_lshb_low(r, fb_poly_get(), k);
+./fb/relic_fb_poly.c:		fb_itr_pre((fb_t *)fb_poly_tab_sqr(i), u[i]);
+./fb/relic_fb_poly.c:static void fb_poly_set(const fb_t f) {
+./fb/relic_fb_poly.c:	fb_copy(core_get()->fb_poly, f);
+./fb/relic_fb_poly.c:void fb_poly_init(void) {
+./fb/relic_fb_poly.c:	fb_zero(ctx->fb_poly);
+./fb/relic_fb_poly.c:void fb_poly_clean(void) {
+./fb/relic_fb_poly.c:dig_t *fb_poly_get(void) {
+./fb/relic_fb_poly.c:	return core_get()->fb_poly;
+./fb/relic_fb_poly.c:void fb_poly_add(fb_t c, const fb_t a) {
+./fb/relic_fb_poly.c:		c[FB_DIGS - 1] ^= ctx->fb_poly[FB_DIGS - 1];
+./fb/relic_fb_poly.c:			c[ctx->fb_na] ^= ctx->fb_poly[ctx->fb_na];
+./fb/relic_fb_poly.c:				c[ctx->fb_nb] ^= ctx->fb_poly[ctx->fb_nb];
+./fb/relic_fb_poly.c:				c[ctx->fb_nc] ^= ctx->fb_poly[ctx->fb_nc];
+./fb/relic_fb_poly.c:		fb_add(c, a, ctx->fb_poly);
+./fb/relic_fb_poly.c:void fb_poly_sub(fb_t c, const fb_t a) {
+./fb/relic_fb_poly.c:	fb_poly_add(c, a);
+./fb/relic_fb_poly.c:void fb_poly_set_dense(const fb_t f) {
+./fb/relic_fb_poly.c:	fb_poly_set(f);
+./fb/relic_fb_poly.c:void fb_poly_set_trino(int a) {
+./fb/relic_fb_poly.c:		fb_poly_set(f);
+./fb/relic_fb_poly.c:void fb_poly_set_penta(int a, int b, int c) {
+./fb/relic_fb_poly.c:		fb_poly_set(f);
+./fb/relic_fb_poly.c:dig_t *fb_poly_get_srz(void) {
+./fb/relic_fb_poly.c:const fb_t *fb_poly_tab_sqr(int i) {
+./fb/relic_fb_poly.c:const dig_t *fb_poly_tab_srz(int i) {
+./fb/relic_fb_poly.c:void fb_poly_get_trc(int *a, int *b, int *c) {
+./fb/relic_fb_poly.c:void fb_poly_get_rdc(int *a, int *b, int *c) {
+./fb/relic_fb_poly.c:const dig_t *fb_poly_get_slv() {
+./fb/relic_fb_poly.c:const int *fb_poly_get_chain(int *len) {
+./fb/relic_fb_mul.c:			fb_poly_add(c, t);
+./fb/relic_fb_param.c:			fb_poly_set_penta(4, 3, 2);
+./fb/relic_fb_param.c:			fb_poly_set_penta(4, 3, 1);
+./fb/relic_fb_param.c:			fb_poly_set_trino(9);
+./fb/relic_fb_param.c:			fb_poly_set_trino(63);
+./fb/relic_fb_param.c:			fb_poly_set_penta(7, 2, 1);
+./fb/relic_fb_param.c:			fb_poly_set_penta(13, 2, 1);
+./fb/relic_fb_param.c:			fb_poly_set_penta(57, 49, 29);
+./fb/relic_fb_param.c:			fb_poly_set_penta(7, 6, 3);
+./fb/relic_fb_param.c:			fb_poly_set_trino(15);
+./fb/relic_fb_param.c:			fb_poly_set_trino(159);
+./fb/relic_fb_param.c:			fb_poly_set_trino(74);
+./fb/relic_fb_param.c:			fb_poly_set_trino(81);
+./fb/relic_fb_param.c:			fb_poly_set_trino(158);
+./fb/relic_fb_param.c:			fb_poly_set_trino(41);
+./fb/relic_fb_param.c:			fb_poly_set_penta(89, 81, 3);
+./fb/relic_fb_param.c:			fb_poly_set_penta(7, 4, 2);
+./fb/relic_fb_param.c:			fb_poly_set_trino(201);
+./fb/relic_fb_param.c:			fb_poly_set_penta(207, 175, 111);
+./fb/relic_fb_param.c:			fb_poly_set_penta(97, 89, 87);
+./fb/relic_fb_param.c:			fb_poly_set_penta(12, 7, 5);
+./fb/relic_fb_param.c:			fb_poly_set_trino(69);
+./fb/relic_fb_param.c:			fb_poly_set_trino(95);
+./fb/relic_fb_param.c:			fb_poly_set_trino(21);
+./fb/relic_fb_param.c:			fb_poly_set_trino(87);
+./fb/relic_fb_param.c:			fb_poly_set_trino(49);
+./fb/relic_fb_param.c:			fb_poly_set_penta(193, 185, 5);
+./fb/relic_fb_param.c:			fb_poly_set_penta(10, 5, 2);
+./fb/relic_fb_param.c:			fb_poly_set_trino(255);
+./fb/relic_fb_param.c:	fb_poly_get_rdc(&fa, &fb, &fc);
+./fb/relic_fb_inv.c:		fb_copy(v, fb_poly_get());
+./fb/relic_fb_inv.c:					fb_poly_add(g1, g1);
+./fb/relic_fb_inv.c:					fb_poly_add(g2, g2);
+./fb/relic_fb_inv.c:		fb_copy(v, fb_poly_get());
+./fb/relic_fb_inv.c:		fb_copy(v, fb_poly_get());
+./fb/relic_fb_inv.c:					fb_poly_add(b, b);
+./fb/relic_fb_inv.c:	const int *chain = fb_poly_get_chain(&len);
+./fb/relic_fb_inv.c:			fb_itr(table[i], table[x], u[y], fb_poly_tab_sqr(y));
+./fb/relic_fb_inv.c:		fb_copy(_s, fb_poly_get());
+./low/msp-asm/relic_fb_srt_low.c:	if (fb_poly_tab_srz(0) == NULL) {
+./low/msp-asm/relic_fb_srt_low.c:		dv_copy(s, fb_poly_get_srz() + HALF, FB_DIGS - HALF);
+./low/msp-asm/relic_fb_srt_low.c:		fb_muld_low(s, t_o, fb_poly_get_srz(), HALF);
+./low/msp-asm/relic_fb_srt_low.c:				fb_addn_low(tmpc, tmpc, fb_poly_tab_srz(u));
+./low/msp-asm/relic_fb_srt_low.c:			fb_addn_low(t + j, t + j, fb_poly_tab_srz(u));
+./low/msp-asm/relic_fb_srt_low.c:	fb_poly_get_rdc(&fa, &fb, &fc);
+./low/msp-asm/relic_fb_rdc_low.c:	fb_poly_get_rdc(&fa, &fb, &fc);
+./low/curve2251-sse/relic_fb_srt_low.c:	tab = fb_poly_tab_srz(ta);\
+./low/curve2251-sse/relic_fb_srt_low.c:	dig_t *b = fb_poly_get_srz();
+./low/curve2251-sse/relic_fb_slv_low.c:	void *tab = fb_poly_get_slv();
+./low/curve2251-sse/relic_fb_inv_low.c:	chain = fb_poly_get_chain(&len);
+./low/curve2251-sse/relic_fb_inv_low.c:		dig_t *tab = (dig_t *)fb_poly_tab_sqr(y);
+./low/easy/relic_fb_trc_low.c:	fb_poly_get_trc(&ta, &tb, &tc);
+./low/easy/relic_fb_srt_low.c:	if (fb_poly_tab_srz(0) == NULL) {
+./low/easy/relic_fb_srt_low.c:		dv_copy(s, fb_poly_get_srz() + HALF, FB_DIGS - HALF);
+./low/easy/relic_fb_srt_low.c:		fb_muld_low(s, t_o, fb_poly_get_srz(), HALF);
+./low/easy/relic_fb_srt_low.c:				fb_addn_low(tmpc, tmpc, fb_poly_tab_srz(u));
+./low/easy/relic_fb_srt_low.c:			fb_addn_low(t + j, t + j, fb_poly_tab_srz(u));
+./low/easy/relic_fb_srt_low.c:	fb_poly_get_rdc(&fa, &fb, &fc);
+./low/easy/relic_fb_slv_low.c:	const void *tab = fb_poly_get_slv();
+./low/easy/relic_fb_inv_low.c:	dv_copy(v, fb_poly_get(), FB_DIGS);
+./low/easy/relic_fb_rdc_low.c:	fb_poly_get_rdc(&fa, &fb, &fc);
+./low/easy/relic_fb_rdc_low.c:	fb_poly_get_rdc(&fa, &fb, &fc);
+./relic_core.c:		fb_poly_init();
+./relic_core.c:		fb_poly_init();
+./relic_core.c:	fb_poly_clean();

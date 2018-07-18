@@ -44,6 +44,8 @@
 #include "relic_cp.h"
 #include "relic_pp.h"
 
+#include "recryptor.h"
+
 /*============================================================================*/
 /* Public definitions                                                         */
 /*============================================================================*/
@@ -127,6 +129,10 @@ int core_init() {
 #endif
 #ifdef WITH_PP
 		pp_map_init();
+#endif
+
+#if defined(REC_FSM) || defined(REC_SINGLE)
+LIM_addr_ir_set();
 #endif
 	}
 	CATCH_ANY {

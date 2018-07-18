@@ -139,11 +139,20 @@ static void eb_mul_lnaf_imp(eb_t r, const eb_t p, const bn_t k) {
 		/* Compute the precomputation table. */
 		eb_tab(t, p, EB_WIDTH);
 
+	#if 0 //YQ_PRT Verified t[3] is correct 
+		volatile int* addr_debug = (int*) 0x9000;
+		int i = (1 << (EB_WIDTH - 2)) - 1;
+		for (int kk = 0;kk< FB_DIGS;kk++)
+			addr_debug[kk] = t[i]->x[kk];
+	#endif
+
 		/* Compute the w-NAF representation of k. */
 		l = sizeof(naf);
 		bn_rec_naf(naf, &l, k, EB_WIDTH);
 
-		n = naf[l - 1];
+		//n = naf[l - 1];
+		n = ((naf[l - 1] << 24) >> 24);
+
 		if (n > 0) {
 			eb_copy(r, t[n / 2]);
 		}
@@ -151,7 +160,11 @@ static void eb_mul_lnaf_imp(eb_t r, const eb_t p, const bn_t k) {
 		for (i = l - 2; i >= 0; i--) {
 			eb_dbl(r, r);
 
-			n = naf[i];
+			//n = naf[i];
+			//n = ((naf[i]>>7)==1) ? (((int)naf[i]) | 0xffffff00) : naf[i];
+
+			n = ((naf[i] << 24) >> 24);
+
 			if (n > 0) {
 				eb_add(r, r, t[n / 2]);
 			}
@@ -159,6 +172,12 @@ static void eb_mul_lnaf_imp(eb_t r, const eb_t p, const bn_t k) {
 				eb_sub(r, r, t[-n / 2]);
 			}
 		}
+
+	#if 0 // YQ_PRT wrong here  
+		volatile int* addr_debug = (int*) 0x9000;
+		for (int kk = 0;kk< FB_DIGS;kk++)
+			addr_debug[kk] = r->x[kk];
+	#endif
 		/* Convert r to affine coordinates. */
 		eb_norm(r, r);
 		if (bn_sign(k) == BN_NEG) {

@@ -1,9 +1,88 @@
 #include "relic_conf.h"
 #include "recryptor.h"
 
+void LIM_addr_ir_set() {
+	int* addr_ir   = (int*) (ADDR_IR  + ADDR_OFFSET);
+	#if FB_POLYN == 163
+	addr_ir[0] = 0xC9; 
+	addr_ir[1] = 0x0;
+	addr_ir[2] = 0x0; 
+	addr_ir[3] = 0x0;
+	addr_ir[4] = 0x0; 
+	addr_ir[5] = 0x8;
+	addr_ir[6] = 0x0; 
+	addr_ir[7] = 0x0;
+	#endif
+
+	#if FB_POLYN == 233
+	addr_ir[0] = 0x1; 
+	addr_ir[1] = 0x0;
+	addr_ir[2] = 0x400; 
+	addr_ir[3] = 0x0;
+	addr_ir[4] = 0x0; 
+	addr_ir[5] = 0x0;
+	addr_ir[6] = 0x0; 
+	addr_ir[7] = 0x200;
+	#endif
+
+	#if FB_POLYN == 283
+	addr_ir[0] = 0x10A1;
+	addr_ir[1] = 0x0;
+	addr_ir[2] = 0x0;
+	addr_ir[3] = 0x0;
+	addr_ir[4] = 0x0;
+	addr_ir[5] = 0x0;
+	addr_ir[6] = 0x0;
+	addr_ir[7] = 0x0;
+	addr_ir[8] = 0x8000000;
+	#endif
+
+	#if FB_POLYN == 409
+	addr_ir[0] = 0x1;
+	addr_ir[1] = 0x0;
+	addr_ir[2] = 0x800000;
+	addr_ir[3] = 0x0;
+	addr_ir[4] = 0x0;
+	addr_ir[5] = 0x0;
+	addr_ir[6] = 0x0;
+	addr_ir[7] = 0x0;
+	addr_ir[8] = 0x0;
+	addr_ir[9] = 0x0;
+	addr_ir[10] = 0x0;
+	addr_ir[11] = 0x0;
+	addr_ir[12] = 0x2000000;
+	#endif
+
+}
+
+void LIM_mulrdc(){
+
+	volatile int* decoder = (int*)DECODER;
+	volatile int* recryptor_FSM_fin_addr = ADDR_REC_FIN;
+ 	volatile int* addr_b    = (int*) (ADDR_B + ADDR_OFFSET);
+ 	volatile int* addr_c    = (int*) (ADDR_C + ADDR_OFFSET);
+
+	for (int i=0;i<FB_DIGS;i++) {
+		addr_c[i] = 0x0; 
+	}
+
+	// precompute table t[0] = 0
+	*(decoder) = IDRC + ((IDRT + 0)<<16) + 75497472 + (3<<28); // 1<<23+4<<24
+
+	// copy from ir_t[0] = c = 0
+	*(decoder) = IDRC + ((IDRIRT + 0)<<16) + 75497472 + (3<<28);
+
+	*(recryptor_FSM_fin_addr) = 0x1;
+	uint8_t dataB_MSB = (addr_b[FB_DIGS-1] >> (FB_MOD-3)) & 0x7;
+	*(decoder+1) = (dataB_MSB);
+	while (*recryptor_FSM_fin_addr != 0xabcd);
+
+
+}
+
 // NEED UPDATE FOR DIFFERENT BANKS!!!
 
-void LIM_mulrdc(volatile int *addr_a, volatile int *addr_b, volatile int *addr_c, uint8_t Idrb, uint8_t Idrc, uint8_t Idrt, uint8_t Idrir, uint8_t Idrirt) { 
+void LIM_mulrdc_single(volatile int *addr_a, volatile int *addr_b, volatile int *addr_c, uint8_t Idrb, uint8_t Idrc, uint8_t Idrt, uint8_t Idrir, uint8_t Idrirt) { 
 //void LIM_mulrdc(volatile int *addr_a, int *addr_b, volatile int *addr_c, uint8_t Idrb, uint8_t Idrc, uint8_t Idrt, uint8_t Idrir, uint8_t Idrirt) { 
 
 /*
